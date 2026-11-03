@@ -1,6 +1,6 @@
 # Sprint 1 Issue Status
 
-> **Historical note:** this table is the Sprint 1 account-system audit. Patchwork now extends that
+> **Historical note:** this table is the Sprint 1 account-system audit. Counter now extends that
 > foundation with repair tickets, customers, devices, inventory, invoices, staff roles, and public
 > tracking. See the root [`README.md`](../README.md) and [`architecture.md`](architecture.md) for the
 > current system.
@@ -46,7 +46,7 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 - The app is deployed at <https://lucky-lee.vercel.app> with a hosted Supabase project.
 - Hosted login, logout, protected redirect, reset link, new-password login, reused-link rejection,
   and all 7 RLS checks passed.
-- The interface was rebuilt as Patchwork: a carbon workshop interface with a programmable 3D
+- The interface was rebuilt as Counter: a carbon workshop interface with a programmable 3D
   three-layer teardown, signal-orange actions, and a public tracker. Final mockups in
   `design/mockups/` are captured from the running app.
 - Remaining external actions: real-inbox email delivery, team acknowledgement of the working

@@ -1,6 +1,6 @@
 # Contributing
 
-Patchwork is a Next.js 16 + Supabase repair-shop app. Keep each change small enough for one reviewer to understand.
+Counter is a Next.js 16 + Supabase repair-shop app. Keep each change small enough for one reviewer to understand.
 
 ## Workflow
 

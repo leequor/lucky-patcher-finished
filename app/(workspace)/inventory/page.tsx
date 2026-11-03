@@ -11,6 +11,7 @@ import {
   PageHeader,
   Panel,
   PrimaryLink,
+  StatStrip,
 } from "@/components/workspace/ui";
 import { formatMoney } from "@/lib/repair/format";
 import { getInventory } from "@/lib/repair/queries";
@@ -43,29 +44,23 @@ export default async function InventoryPage({
       />
       <Feedback notice={params.notice} error={params.error} />
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <Panel className="px-5 py-4">
-          <p className="text-[11px] text-muted">Parts tracked</p>
-          <p className="figure mt-1 text-[26px] font-semibold tracking-[-0.04em] text-ink">{parts.length}</p>
-        </Panel>
-        <Panel className="px-5 py-4">
-          <p className="text-[11px] text-muted">Low stock</p>
-          <p className="figure mt-1 text-[26px] font-semibold tracking-[-0.04em] text-warn">{lowStock.length}</p>
-        </Panel>
-        <Panel className="px-5 py-4">
-          <p className="text-[11px] text-muted">Stock value at cost</p>
-          <p className="figure mt-1 text-[26px] font-semibold tracking-[-0.04em] text-ink">{formatMoney(stockValue)}</p>
-        </Panel>
-      </div>
+      <StatStrip
+        className="mt-5"
+        items={[
+          { label: "Parts tracked", value: String(parts.length), note: "active SKUs" },
+          { label: "Low stock", value: String(lowStock.length), note: "at or below reorder" },
+          { label: "Stock value at cost", value: formatMoney(stockValue), note: "on the shelf" },
+        ]}
+      />
 
       {openForm ? (
         <Panel className="reveal mt-4 p-5 sm:p-6">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h2 className="text-[15px] font-medium text-ink">Add a part</h2>
-              <p className="mt-0.5 text-[12px] text-muted">New inventory is available to tickets immediately.</p>
+              <p className="mt-0.5 text-[13px] text-muted">New inventory is available to tickets immediately.</p>
             </div>
-            <Link href="/inventory" className="text-[12px] text-muted hover:text-ink">
+            <Link href="/inventory" className="text-[13px] text-muted hover:text-ink">
               Close
             </Link>
           </div>
@@ -103,23 +98,23 @@ export default async function InventoryPage({
               name="q"
               defaultValue={params.q}
               placeholder="Search part, SKU, category, supplier"
-              className="h-9 w-full rounded-lg border border-line bg-paper px-3 text-[12px] text-ink outline-none placeholder:text-muted/60 focus:border-accent"
+              className="h-9 w-full rounded-none border border-white/10 bg-transparent px-3 text-[13px] text-ink outline-none transition-colors placeholder:text-muted/60 hover:border-white/20 focus:border-accent"
             />
           </label>
           <button
             type="submit"
-            className="inline-flex h-9 items-center justify-center rounded-full bg-ink px-4 text-[12px] font-semibold text-paper hover:bg-white"
+            className="inline-flex h-9 items-center justify-center rounded-none bg-accent px-4 text-[13px] font-semibold text-[#09090B] hover:bg-[#FF7F4D]"
           >
             Search
           </button>
           {params.q ? (
-            <Link href="/inventory" className="inline-flex h-9 items-center rounded-full border border-line px-3 text-[12px] text-muted hover:text-ink">
+            <Link href="/inventory" className="inline-flex h-9 items-center rounded-none border border-white/10 px-3 text-[13px] text-muted hover:border-white/25 hover:text-ink">
               Clear
             </Link>
           ) : null}
         </form>
 
-        <div className="hidden grid-cols-[1.6fr_0.7fr_0.7fr_0.7fr_0.8fr] gap-4 border-b border-line px-5 py-2.5 text-[10px] text-muted lg:grid">
+        <div className="hidden grid-cols-[1.6fr_0.7fr_0.7fr_0.7fr_0.8fr] gap-4 border-b border-white/10 px-5 py-2.5 font-mono text-[10px] uppercase tracking-widest text-white/50 lg:grid">
           <span>Part</span>
           <span>Stock</span>
           <span>Reorder at</span>
@@ -129,39 +124,43 @@ export default async function InventoryPage({
 
         <div className="divide-y divide-line">
           {parts.length === 0 ? (
-            <p className="px-5 py-8 text-center text-[12px] text-muted">No parts match that search.</p>
+            <p className="px-5 py-8 text-center text-[13px] text-muted">No parts match that search.</p>
           ) : (
             parts.map((part) => {
               const low = part.stock <= part.reorder_level;
               return (
-                <div key={part.id} className="grid gap-3 px-5 py-4 lg:grid-cols-[1.6fr_0.7fr_0.7fr_0.7fr_0.8fr] lg:items-center lg:gap-4">
+                <div key={part.id} className="grid gap-3 px-5 py-4 transition-colors hover:bg-white/5 lg:grid-cols-[1.6fr_0.7fr_0.7fr_0.7fr_0.8fr] lg:items-center lg:gap-4">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="truncate text-[13px] font-medium text-ink">{part.name}</p>
                       {low ? (
-                        <span className="rounded-full bg-warn-soft px-2 py-0.5 text-[9px] font-medium text-warn">
+                        <span
+                          className={`font-mono text-[9px] uppercase tracking-[0.14em] ${
+                            part.stock === 0 ? "text-negative" : "text-warn"
+                          }`}
+                        >
                           {part.stock === 0 ? "Out" : "Low"}
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-0.5 text-[10px] text-muted">
+                    <p className="mt-0.5 text-[12px] text-muted">
                       {part.sku} · {part.category}
                       {part.supplier ? ` · ${part.supplier}` : ""}
                     </p>
                   </div>
                   <div>
                     <div className="flex items-center justify-between gap-2 lg:justify-start">
-                      <span className="figure text-[12px] text-ink">{part.stock}</span>
-                      <span className="text-[10px] text-muted lg:hidden">in stock</span>
+                      <span className="figure text-[13px] text-ink">{part.stock}</span>
+                      <span className="text-[12px] text-muted lg:hidden">in stock</span>
                     </div>
                     <div className="mt-1.5 max-w-[120px]">
                       <DataBar value={part.stock} max={Math.max(part.reorder_level * 2, part.stock)} tone={low ? "bg-warn" : "bg-positive"} />
                     </div>
                   </div>
-                  <p className="figure text-[12px] text-muted">{part.reorder_level}</p>
+                  <p className="figure text-[13px] text-muted">{part.reorder_level}</p>
                   <div>
-                    <p className="figure text-[12px] text-ink">{formatMoney(part.price_cents)}</p>
-                    <p className="text-[10px] text-muted">cost {formatMoney(part.cost_cents)}</p>
+                    <p className="figure text-[13px] text-ink">{formatMoney(part.price_cents)}</p>
+                    <p className="text-[12px] text-muted">cost {formatMoney(part.cost_cents)}</p>
                   </div>
                   <div className="flex gap-2 lg:justify-end">
                     {canManage ? (
@@ -172,7 +171,7 @@ export default async function InventoryPage({
                           <button
                             type="submit"
                             disabled={part.stock === 0}
-                            className="grid h-8 w-8 place-items-center rounded-lg border border-line text-[14px] text-muted hover:border-negative/40 hover:text-negative disabled:opacity-30"
+                            className="grid h-8 w-8 place-items-center rounded-none border border-white/10 text-[14px] text-muted transition-colors hover:border-negative/40 hover:text-negative disabled:opacity-30"
                             aria-label={`Remove one ${part.name}`}
                           >
                             −
@@ -183,7 +182,7 @@ export default async function InventoryPage({
                           <input type="hidden" name="delta" value="1" />
                           <button
                             type="submit"
-                            className="grid h-8 w-8 place-items-center rounded-lg border border-line text-[14px] text-muted hover:border-positive/40 hover:text-positive"
+                            className="grid h-8 w-8 place-items-center rounded-none border border-white/10 text-[14px] text-muted transition-colors hover:border-positive/40 hover:text-positive"
                             aria-label={`Add one ${part.name}`}
                           >
                             +
@@ -191,7 +190,7 @@ export default async function InventoryPage({
                         </form>
                       </>
                     ) : (
-                      <span className="text-[10px] text-muted">Manager-managed</span>
+                      <span className="text-[12px] text-muted">Manager-managed</span>
                     )}
                   </div>
                 </div>
@@ -201,7 +200,7 @@ export default async function InventoryPage({
         </div>
       </Panel>
 
-      <p className="mt-4 text-[11px] text-muted">
+      <p className="mt-4 text-[12px] text-muted">
         Stock moves automatically when a part is attached to a ticket. Manual adjustments are
         owner- and manager-controlled.
       </p>

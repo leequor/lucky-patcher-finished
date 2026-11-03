@@ -6,7 +6,7 @@
 | --- | --- |
 | Date | 2026-10-27 |
 | Tester | Automated run with local and hosted Supabase and Chrome |
-| App version | Patchwork on `main` + Vercel production |
+| App version | Counter on `main` + Vercel production |
 | Unit and component test files | 35 |
 | Unit and component tests | 189 passed |
 | Coverage | 63.67% statements, 58.36% branches, 80.5% functions, 67.07% lines |
@@ -19,7 +19,7 @@
 | Hosted email delivery | Not tested; demo addresses are not real inboxes |
 | Human mockup comparison | Pending |
 
-**Overall:** the current Patchwork build passes typecheck, lint, 189 unit/component tests, the coverage
+**Overall:** the current Counter build passes typecheck, lint, 189 unit/component tests, the coverage
 gate, the production build, 15 RLS/integration checks, and 16 browser checks. The hosted Vercel
 deployment is live at <https://lucky-lee.vercel.app>. The only remaining external gap is real email
 delivery to a real inbox.

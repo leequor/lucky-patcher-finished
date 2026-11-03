@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Feedback, PageHeader, Panel } from "@/components/workspace/ui";
+import {
+  Feedback,
+  PageHeader,
+  Panel,
+  SecondaryLink,
+} from "@/components/workspace/ui";
 import { TicketIntakeForm } from "@/components/workspace/ticket-intake-form";
 import { getCustomerOptions, getStaffProfiles } from "@/lib/repair/queries";
 
@@ -20,18 +25,11 @@ export default async function NewTicketPage({ searchParams }: { searchParams: Se
       <PageHeader
         title="New intake"
         description="Log the device, record the fault, and put it in the queue."
-        actions={
-          <Link
-            href="/tickets"
-            className="inline-flex h-9 items-center justify-center rounded-full border border-line bg-wash px-3.5 text-[12px] font-medium text-ink transition-colors hover:border-[#3A414B]"
-          >
-            Back to tickets
-          </Link>
-        }
+        actions={<SecondaryLink href="/tickets">Back to tickets</SecondaryLink>}
       />
       <Feedback error={params.error} />
 
-      <div className="mt-5 grid gap-4 xl:grid-cols-[1.45fr_0.55fr]">
+      <div className="mt-5 grid gap-4 xl:grid-cols-[1.5fr_0.5fr]">
         <Panel className="reveal p-5 sm:p-6">
           <TicketIntakeForm
             customers={customers}
@@ -40,51 +38,51 @@ export default async function NewTicketPage({ searchParams }: { searchParams: Se
           />
         </Panel>
 
-        <div className="grid content-start gap-4">
-          <Panel className="reveal reveal-delay-1 overflow-hidden">
-            <div className="border-b border-line px-5 py-4">
-              <h2 className="text-[15px] font-medium text-ink">Intake checklist</h2>
-              <p className="mt-0.5 text-[12px] text-muted">Do these before the device leaves the counter.</p>
-            </div>
-            <ol className="divide-y divide-line">
+        <div className="reveal reveal-delay-1 self-start border-t border-white/10">
+          <section className="border-b border-line p-5">
+            <h2 className="text-[13px] font-semibold text-ink">Intake checklist</h2>
+            <p className="mt-1 text-[12.5px] text-muted">
+              Before the device leaves the counter.
+            </p>
+            <ul className="mt-3 space-y-2.5">
               {[
                 "Confirm the customer's phone and email.",
                 "Record the exact fault and any existing damage.",
                 "Photograph the device if it is already damaged.",
                 "Give the customer the tracking code from the ticket page.",
-              ].map((item, index) => (
-                <li key={item} className="flex gap-3 px-5 py-3">
-                  <span className="figure mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-line text-[10px] text-muted">
-                    {index + 1}
-                  </span>
-                  <p className="text-[12px] leading-5 text-muted">{item}</p>
+              ].map((item) => (
+                <li key={item} className="flex gap-2.5">
+                  <span className="mt-[7px] h-[3px] w-[3px] shrink-0 bg-accent" aria-hidden="true" />
+                  <p className="text-[12.5px] leading-5 text-ink">{item}</p>
                 </li>
               ))}
-            </ol>
-          </Panel>
+            </ul>
+          </section>
 
-          <Panel className="reveal reveal-delay-2 p-5">
-            <h2 className="text-[14px] font-medium text-ink">What the customer gets</h2>
-            <p className="mt-2 text-[12px] leading-5 text-muted">
+          <section className="border-b border-line p-5">
+            <h2 className="text-[13px] font-semibold text-ink">What the customer gets</h2>
+            <p className="mt-1.5 text-[12.5px] leading-5 text-muted">
               Every ticket gets a tracking code. The customer opens{" "}
-              <Link href="/track" className="text-accent underline underline-offset-2 hover:text-[#ff8358]">
+              <Link href="/track" className="text-ink underline decoration-white/20 underline-offset-2 transition-colors hover:decoration-accent">
                 /track
               </Link>{" "}
               and enters the code. No email or phone number is needed.
             </p>
-            <div className="mt-4 rounded-xl border border-line bg-paper p-3">
-              <p className="text-[10px] text-muted">Customer sees</p>
-              <p className="mt-1 text-[12px] text-ink">Status, device, issue, and visible timeline notes.</p>
+            <div className="mt-3 border-l-2 border-accent bg-white/[0.03] p-3">
+              <p className="text-[11.5px] text-muted">Customer sees</p>
+              <p className="mt-1 text-[12.5px] leading-5 text-ink">
+                Status, device, issue, and visible timeline notes.
+              </p>
             </div>
-          </Panel>
+          </section>
 
-          <Panel className="reveal reveal-delay-3 p-5">
-            <h2 className="text-[14px] font-medium text-ink">Billing default</h2>
-            <p className="mt-2 text-[12px] leading-5 text-muted">
-              Invoices add labour plus parts and apply a 12% tax. You can edit labour and the estimate
-              from the ticket after diagnosis.
+          <section className="p-5">
+            <h2 className="text-[13px] font-semibold text-ink">Billing default</h2>
+            <p className="mt-1.5 text-[12.5px] leading-5 text-muted">
+              Invoices add labour plus parts and apply a 12% tax. You can edit labour and the
+              estimate from the ticket after diagnosis.
             </p>
-          </Panel>
+          </section>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Patchwork is a single Next.js App Router application. Supabase provides authentication, Postgres,
+Counter is a single Next.js App Router application. Supabase provides authentication, Postgres,
 and row level security. The same deployment serves the staff workspace, the public repair tracker,
 and the health endpoints.
 

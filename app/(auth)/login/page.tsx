@@ -20,7 +20,7 @@ export default async function LoginPage({
 
   return (
     <AuthCard
-      title="Sign in to Patchwork"
+      title="Sign in to Counter"
       description="Use the staff email and password for the repair desk. The session stays in a secure cookie."
       footer={
         <p>

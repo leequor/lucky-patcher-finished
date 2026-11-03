@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { RepairBench } from "@/components/patchwork/repair-bench";
 import { StatusPanel } from "@/components/landing/status-panel";
 import { Logo } from "@/components/ui/logo";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "System status",
@@ -26,66 +26,114 @@ const RUNBOOK = [
 
 export default function StatusPage() {
   return (
-    <main className="min-h-[100dvh] bg-paper">
-      <header className="border-b border-line bg-paper">
-        <div className="mx-auto flex h-16 max-w-canvas items-center justify-between px-5 sm:px-6">
+    <main className="flex min-h-[100dvh] flex-col bg-paper">
+      <header className="border-b border-line">
+        <div className="mx-auto flex h-16 max-w-canvas items-center justify-between px-5 sm:px-8">
           <Logo />
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[12px] text-muted transition-colors hover:border-[#335245] hover:text-ink"
+            className="inline-flex h-[34px] items-center border border-line px-3 text-[12.5px] text-muted transition-colors hover:border-ink hover:text-ink"
           >
             Back to desk
           </Link>
         </div>
       </header>
 
-      <div className="mx-auto max-w-canvas px-5 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-8 sm:px-6 sm:pt-12">
-        <div className="grid items-stretch gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="reveal rounded-2xl border border-line bg-surface p-6 sm:p-8">
-            <div className="flex items-center gap-2 text-[12px] text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-              Live checks, never cached
-            </div>
-            <h1 className="mt-3 text-[34px] font-semibold leading-[1.02] tracking-[-0.045em] text-ink sm:text-[44px]">
-              System status
+      <div className="mx-auto w-full max-w-canvas flex-1 px-5 pb-16 pt-8 sm:px-8 sm:pt-12">
+        <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+          <div className="reveal">
+            <h1 className="display text-[clamp(2.6rem,4.8vw,4.2rem)] font-semibold leading-[0.88] tracking-[-0.055em] text-ink">
+              System
+              <br />
+              status.
             </h1>
-            <p className="mt-3 max-w-[58ch] text-[14px] leading-6 text-muted">
-              Checks the Next.js app and the configured Supabase project. Run this before the demo
+            <p className="mt-5 max-w-[46ch] text-[14px] leading-6 text-muted">
+              Checks the Next.js app and the configured Supabase project. Run this before service
               so the environment is known.
             </p>
-            <div className="mt-6">
+            <div className="mt-8 border-t border-white/10 pt-5">
               <StatusPanel />
             </div>
           </div>
 
-          <div className="reveal reveal-delay-1 relative hidden min-h-[280px] overflow-hidden rounded-2xl border border-line bg-[#0B0D10] lg:block">
-            <RepairBench compact className="absolute inset-0 border-0" />
-            <div className="pointer-events-none absolute inset-x-5 bottom-5">
-              <p className="text-[11px] text-muted">Bench check</p>
-              <p className="mt-1 text-[14px] font-medium text-ink">Two checks. One clear answer.</p>
+          <aside className="reveal reveal-delay-1 lg:border-l lg:border-line lg:pl-10">
+            <div className="border-t border-white/10 pt-4">
+              <h2 className="display text-[19px] font-semibold tracking-[-0.04em] text-ink">
+                If a check fails
+              </h2>
+              <p className="mt-1.5 max-w-[38ch] text-[12.5px] leading-5 text-muted">
+                Work top to bottom. Each entry names the one thing to confirm.
+              </p>
             </div>
-          </div>
-        </div>
 
-        <section className="reveal reveal-delay-2 mt-9">
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <h2 className="text-[17px] font-medium text-ink">If a check fails</h2>
-            <p className="text-[12px] text-muted">Work top to bottom.</p>
-          </div>
-          <div className="mt-3 overflow-hidden rounded-2xl border border-line bg-surface">
-            {RUNBOOK.map((item) => (
-              <div key={item.title} className="border-t border-line px-5 py-4 first:border-t-0 sm:px-6">
-                <p className="text-[14px] font-medium text-ink">{item.title}</p>
-                <p className="mt-0.5 max-w-[78ch] text-[13px] leading-5 text-muted">{item.body}</p>
+            <div>
+              {RUNBOOK.map((item) => (
+                <div key={item.title} className="border-b border-line py-4">
+                  <p className="text-[13px] font-medium text-ink">{item.title}</p>
+                  <p className="mt-1 max-w-[44ch] text-[12.5px] leading-5 text-muted">
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-4 text-[12px] leading-5 text-muted">
+              A failed row names the reason. Both endpoints run again on reload.
+            </p>
+          </aside>
+        </div>
+        <section className="reveal reveal-delay-2 mt-12 border-t border-white/10 pt-5">
+          <h2 className="display text-[19px] font-semibold tracking-[-0.04em] text-ink">
+            What the rows mean
+          </h2>
+          <p className="mt-1.5 max-w-[56ch] text-[12.5px] leading-5 text-muted">
+            Both checks report one of four states. Only the last two need a person.
+          </p>
+          <dl className="mt-5 grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                label: "Checking",
+                tone: "bg-wash text-muted",
+                dot: "bg-steel",
+                body: "The request is in flight. Rows settle in under a second once the deployment is warm.",
+              },
+              {
+                label: "Ready",
+                tone: "bg-positive-soft text-positive-ink",
+                dot: "bg-positive",
+                body: "The endpoint answered. The row names the service and the latency it measured.",
+              },
+              {
+                label: "Warning",
+                tone: "bg-warn-soft text-warn",
+                dot: "bg-warn",
+                body: "Reachable but unconfigured. Check the Supabase URL and anon key on the deployment.",
+              },
+              {
+                label: "Down",
+                tone: "bg-negative-soft text-negative-ink",
+                dot: "bg-negative",
+                body: "No answer. Work the runbook above, then reload this page to run both checks again.",
+              },
+            ].map((state) => (
+              <div key={state.label} className="border-t border-white/10 px-4 py-4 sm:border-l sm:border-t-0 sm:first:border-l-0">
+                <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                  <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", state.dot)} aria-hidden="true" />
+                  {state.label}
+                </span>
+                <p className="mt-2.5 text-[12.5px] leading-5 text-muted">{state.body}</p>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
-
-        <footer className="mt-8 border-t border-line pt-4 text-[12px] text-muted">
-          Health checks run on demand and are never cached.
-        </footer>
       </div>
+
+      <footer className="border-t border-line">
+        <div className="mx-auto flex w-full max-w-canvas flex-wrap items-center justify-between gap-2 px-5 py-4 text-[12px] text-muted sm:px-8">
+          <p>Counter · Repair operations</p>
+          <p>Health checks run on demand and are never cached.</p>
+        </div>
+      </footer>
     </main>
   );
 }

@@ -22,14 +22,14 @@ describe("CopyButton", () => {
 describe("Logo", () => {
   it("renders the linked wordmark", () => {
     render(<Logo />);
-    const link = screen.getByRole("link", { name: /Patchwork home/ });
+    const link = screen.getByRole("link", { name: /Counter home/ });
     expect(link).toHaveAttribute("href", "/");
-    expect(withinLogo(link)).toBe("Patchwork");
+    expect(withinLogo(link)).toBe("Counter");
   });
 
   it("supports mark-only and non-linked variants", () => {
     render(<Logo markOnly href="" />);
-    expect(screen.queryByText("Patchwork")).not.toBeInTheDocument();
+    expect(screen.queryByText("Counter")).not.toBeInTheDocument();
   });
 });
 

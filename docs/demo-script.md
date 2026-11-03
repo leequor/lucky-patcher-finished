@@ -1,6 +1,6 @@
 # Demo Script and Rehearsal Log
 
-**Goal:** show Patchwork as a working repair-shop system: intake, repair workflow, inventory,
+**Goal:** show Counter as a working repair-shop system: intake, repair workflow, inventory,
 invoice/payment, staff roles, and public tracking. About 12 minutes including questions.
 
 ## Speaker assignments
@@ -32,7 +32,7 @@ invoice/payment, staff roles, and public tracking. About 12 minutes including qu
 
 **Alexander**
 
-> “We built Patchwork, a repair-shop operations system. It is not a progress dashboard: it runs
+> “We built Counter, a repair-shop operations system. It is not a progress dashboard: it runs
 > intake, the repair bench, parts inventory, invoicing, staff roles, and a public repair tracker.”
 
 Show the issue board / merged PR, then the live dashboard.

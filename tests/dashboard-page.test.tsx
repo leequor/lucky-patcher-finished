@@ -84,7 +84,7 @@ describe("DashboardPage", () => {
     });
     render(await DashboardPage());
 
-    expect(screen.getByText("The bench is clear")).toBeInTheDocument();
+    expect(screen.getAllByText("Nothing in this stage.")).toHaveLength(4);
     expect(screen.getByText("Nothing waiting for pickup.")).toBeInTheDocument();
     expect(screen.getByText("Stock levels are healthy.")).toBeInTheDocument();
     expect(screen.getByText("No staff profiles yet.")).toBeInTheDocument();

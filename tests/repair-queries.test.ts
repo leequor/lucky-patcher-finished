@@ -97,8 +97,8 @@ const tables: Record<string, unknown[]> = {
       tax_cents: 3528,
       total_cents: 32928,
       status: "paid",
-      issued_at: "2026-10-27T10:00:00.000Z",
-      paid_at: "2026-10-27T11:00:00.000Z",
+      issued_at: new Date().toISOString(),
+      paid_at: new Date().toISOString(),
       notes: null,
       ticket: {
         ticket_number: "PW-1041",

@@ -40,3 +40,16 @@ Thumbs.db
 # design skill working files
 .taste-skill/
 
+
+# Raw Meshy source models stay in the art pipeline, not in public/.
+# Only the optimized, Draco-compressed exports ship.
+/public/models/iphone/*.glb
+!/public/models/iphone/*-transformed.glb
+
+# Local review screenshots and dev/build logs
+.review/
+.dev.log
+.build.log
+
+# Local backups of the remote repository
+.backups/
