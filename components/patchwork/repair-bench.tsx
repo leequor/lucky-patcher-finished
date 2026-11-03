@@ -34,6 +34,22 @@ const LAYERS = [
 
 type LayerId = (typeof LAYERS)[number]["id"];
 
+/**
+ * Per-frame material easing, kept outside the component: these are imperative
+ * Three.js mutations driven by the render loop, which React does not own.
+ */
+function easeLayer(
+  materials: THREE.MeshStandardMaterial[],
+  opacity: number,
+  glow: number,
+  ease: number,
+) {
+  for (const material of materials) {
+    material.opacity += (opacity - material.opacity) * ease;
+    material.emissiveIntensity += (glow - material.emissiveIntensity) * ease;
+  }
+}
+
 function Layer({ spec, active }: { spec: (typeof LAYERS)[number]; active: boolean }) {
   const group = useRef<THREE.Group>(null);
   const materials = useRef<THREE.MeshStandardMaterial[]>([]);
@@ -68,12 +84,7 @@ function Layer({ spec, active }: { spec: (typeof LAYERS)[number]; active: boolea
       root.position.y += (spec.y + (active ? LIFT : 0) - root.position.y) * ease;
     }
 
-    const opacity = active ? 1 : DIM;
-    const glow = active ? 0.04 : 0;
-    for (const material of materials.current) {
-      material.opacity += (opacity - material.opacity) * ease;
-      material.emissiveIntensity += (glow - material.emissiveIntensity) * ease;
-    }
+    easeLayer(materials.current, active ? 1 : DIM, active ? 0.04 : 0, ease);
   });
 
   const Model = spec.Model;

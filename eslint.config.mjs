@@ -11,5 +11,8 @@ export default defineConfig([
     "build/**",
     "coverage/**",
     "next-env.d.ts",
+    // Vendored static assets: the self-hosted Draco decoder is a minified
+    // asm.js/wasm bundle, not source we own.
+    "public/**",
   ]),
 ]);
