@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-ink underline decoration-[#345347] underline-offset-4 transition-colors hover:decoration-accent";
+  "font-medium text-ink underline decoration-white/20 underline-offset-4 transition-colors hover:decoration-accent";
 
 export default function ForgotPasswordPage() {
   return (

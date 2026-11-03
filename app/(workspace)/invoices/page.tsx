@@ -11,6 +11,7 @@ import {
   Panel,
   PanelHeader,
   PrimaryLink,
+  StatStrip,
 } from "@/components/workspace/ui";
 import { formatDate, formatMoney } from "@/lib/repair/format";
 import { getInvoices } from "@/lib/repair/queries";
@@ -41,20 +42,14 @@ export default async function InvoicesPage({
       />
       <Feedback notice={params.notice} error={params.error} />
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <Panel className="px-5 py-4">
-          <p className="text-[11px] text-muted">Collected</p>
-          <p className="figure mt-1 text-[26px] font-semibold tracking-[-0.04em] text-positive-ink">{formatMoney(revenue)}</p>
-        </Panel>
-        <Panel className="px-5 py-4">
-          <p className="text-[11px] text-muted">Unpaid</p>
-          <p className="figure mt-1 text-[26px] font-semibold tracking-[-0.04em] text-warn">{unpaid.length}</p>
-        </Panel>
-        <Panel className="px-5 py-4">
-          <p className="text-[11px] text-muted">Invoices issued</p>
-          <p className="figure mt-1 text-[26px] font-semibold tracking-[-0.04em] text-ink">{invoices.length}</p>
-        </Panel>
-      </div>
+      <StatStrip
+        className="mt-5"
+        items={[
+          { label: "Collected", value: formatMoney(revenue), note: `${paid.length} paid invoices` },
+          { label: "Unpaid", value: String(unpaid.length), note: "awaiting payment" },
+          { label: "Invoices issued", value: String(invoices.length), note: "all time" },
+        ]}
+      />
 
       <Panel className="mt-4 overflow-hidden">
         <PanelHeader title="Invoice ledger" detail="Newest first. Payment marks the ticket collected." />
@@ -68,7 +63,7 @@ export default async function InvoicesPage({
           </div>
         ) : (
           <>
-            <div className="hidden grid-cols-[0.8fr_0.8fr_1.2fr_1fr_0.6fr_0.7fr_0.7fr] gap-4 border-b border-line px-5 py-2.5 text-[10px] text-muted lg:grid">
+            <div className="hidden grid-cols-[0.8fr_0.8fr_1.2fr_1fr_0.6fr_0.7fr_0.7fr] gap-4 border-b border-white/10 px-4 py-2.5 font-mono text-[10px] uppercase tracking-widest text-white/50 lg:grid">
               <span>Invoice</span>
               <span>Ticket</span>
               <span>Customer</span>
@@ -77,38 +72,49 @@ export default async function InvoicesPage({
               <span className="text-right">Total</span>
               <span className="text-right">Action</span>
             </div>
-            <div className="divide-y divide-line">
+            <div className="divide-y divide-white/10">
               {invoices.map((invoice) => (
                 <div
                   key={invoice.id}
-                  className="grid gap-3 px-5 py-4 lg:grid-cols-[0.8fr_0.8fr_1.2fr_1fr_0.6fr_0.7fr_0.7fr] lg:items-center lg:gap-4"
+                  className="grid gap-3 px-4 py-3.5 transition-colors hover:bg-white/5 lg:grid-cols-[0.8fr_0.8fr_1.2fr_1fr_0.6fr_0.7fr_0.7fr] lg:items-center lg:gap-4"
                 >
                   <div>
-                    <p className="figure text-[12px] font-medium text-ink">{invoice.invoice_number}</p>
-                    <p className="mt-0.5 text-[10px] text-muted">{formatDate(invoice.issued_at)}</p>
+                    <p className="figure text-[13px] font-medium text-ink">
+                      {invoice.invoice_number}
+                    </p>
+                    <p className="mt-0.5 text-[12px] text-muted">{formatDate(invoice.issued_at)}</p>
                   </div>
-                  <Link href={`/tickets/${invoice.ticket_id}`} className="figure text-[12px] text-accent hover:text-[#ff8358]">
+                  <Link
+                    href={`/tickets/${invoice.ticket_id}`}
+                    className="figure text-[12px] text-muted transition-colors hover:text-ink hover:underline"
+                  >
                     {invoice.ticket.ticket_number}
                   </Link>
-                  <p className="truncate text-[12px] text-ink">{invoice.ticket.customer.full_name}</p>
-                  <p className="truncate text-[12px] text-muted">
+                  <p className="truncate text-[13px] text-ink">{invoice.ticket.customer.full_name}</p>
+                  <p className="truncate text-[13px] text-muted">
                     {invoice.ticket.device.brand} {invoice.ticket.device.model}
                   </p>
-                  <InvoicePill status={invoice.status} />
-                  <p className="figure text-[13px] font-medium text-ink lg:text-right">{formatMoney(invoice.total_cents)}</p>
+                  <InvoicePill status={invoice.status} className="justify-self-start" />
+                  <p className="figure text-[13px] font-medium text-ink lg:text-right">
+                    {formatMoney(invoice.total_cents)}
+                  </p>
                   <div className="flex lg:justify-end">
                     {invoice.status === "paid" ? (
-                      <span className="text-[11px] text-positive-ink">Paid {formatDate(invoice.paid_at)}</span>
+                      <span className="text-[12px] text-positive-ink">
+                        Paid {formatDate(invoice.paid_at)}
+                      </span>
                     ) : invoice.status === "void" ? (
-                      <span className="text-[11px] text-muted">Void</span>
+                      <span className="text-[12px] text-muted">Void</span>
                     ) : canManage ? (
                       <form action={markInvoicePaidAction}>
                         <input type="hidden" name="invoice_id" value={invoice.id} />
                         <input type="hidden" name="return_to" value="/invoices" />
-                        <SubmitButton pendingText="Recording...">Mark paid</SubmitButton>
+                        <SubmitButton size="sm" variant="secondary" pendingText="Recording...">
+                          Mark paid
+                        </SubmitButton>
                       </form>
                     ) : (
-                      <span className="text-[11px] text-muted">Manager review</span>
+                      <span className="text-[12px] text-muted">Manager review</span>
                     )}
                   </div>
                 </div>

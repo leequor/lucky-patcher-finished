@@ -8,7 +8,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #08090b;
+  background: #09090b;
 }
 
 body {
@@ -17,13 +17,13 @@ body {
 }
 
 ::selection {
-  background: #4a2317;
-  color: #f2efe7;
+  background: #ff6b35;
+  color: #09090b;
 }
 
 @layer base {
   * {
-    border-color: #252a32;
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   a,
@@ -34,17 +34,24 @@ body {
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Native selects render their option list with OS defaults. Without a dark
+     color scheme that list is white with a blue highlight, so light text
+     disappears. This is what makes the closed control and its popup dark. */
+  select {
+    color-scheme: dark;
+  }
+
   :focus-visible {
     outline: 2px solid #ff6b35;
-    outline-offset: 3px;
+    outline-offset: 2px;
   }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #f2efe7;
-    box-shadow: 0 0 0 1000px #111317 inset; /* taste-skill-ignore shadow */
-    caret-color: #f2efe7;
+    -webkit-text-fill-color: #f4f4f5;
+    box-shadow: 0 0 0 1000px #121212 inset;
+    caret-color: #f4f4f5;
   }
 
   ::-webkit-scrollbar {
@@ -53,13 +60,36 @@ body {
   }
 
   ::-webkit-scrollbar-track {
-    background: #08090b;
+    background: #09090b;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2b313a;
-    border-radius: 9999px;
-    border: 2px solid #08090b;
+    background: #2a2a2e;
+    border: 2px solid #09090b;
+    border-radius: 0;
+  }
+}
+
+@layer components {
+  /* Square, hairline-tokened select with our own chevron instead of the OS
+     bevel. Pair with a right padding utility so the label never runs under it. */
+  .select-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238B8B94' stroke-width='1.4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.55rem center;
+    background-size: 9px 6px;
+  }
+
+  .select-control option,
+  .select-control optgroup {
+    background-color: #121212;
+    color: #f4f4f5;
+  }
+
+  .select-control option:checked {
+    background-color: #1f1f23;
+    color: #ffffff;
   }
 }
 
@@ -69,37 +99,36 @@ body {
   }
 
   .figure {
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-variant-numeric: tabular-nums;
   }
 
-  .scene-field {
-    background-color: #07090c;
-    background-image:
-      radial-gradient(60% 72% at 64% 36%, rgba(255, 107, 53, 0.1), transparent 68%),
-      radial-gradient(72% 82% at 48% 46%, #1a222b 0%, #0c1015 54%, #07090c 100%);
+  .display {
+    font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: "wdth" 100;
   }
 
   .reveal {
-    animation: reveal 700ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+    animation: reveal 520ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
   }
 
   .reveal-delay-1 {
-    animation-delay: 90ms;
+    animation-delay: 70ms;
   }
 
   .reveal-delay-2 {
-    animation-delay: 180ms;
+    animation-delay: 140ms;
   }
 
   .reveal-delay-3 {
-    animation-delay: 270ms;
+    animation-delay: 210ms;
   }
 }
 
 @keyframes reveal {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;

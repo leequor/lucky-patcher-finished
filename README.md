@@ -1,4 +1,4 @@
-# Patchwork
+# Counter
 
 Repair-shop operations system for intake, repair tickets, customers, devices, parts, invoices, staff, and public repair tracking.
 
@@ -33,7 +33,7 @@ Built with Next.js 16, React 19, Tailwind CSS, Supabase Auth/Postgres/RLS, and a
 ## Stack
 
 - **Next.js 16** App Router, React 19, TypeScript
-- **Tailwind CSS** with the Patchwork tokens in [`tailwind.config.ts`](tailwind.config.ts)
+- **Tailwind CSS** with the Counter tokens in [`tailwind.config.ts`](tailwind.config.ts)
 - **Supabase Auth + Postgres** with row level security and security-definer RPCs
 - **Three.js / React Three Fiber / drei** for the teardown scene
 - **Vitest + Testing Library** for unit/component tests

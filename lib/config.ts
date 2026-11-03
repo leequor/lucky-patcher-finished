@@ -1,7 +1,7 @@
-export const APP_NAME = "Patchwork";
-export const APP_TAGLINE = "The repair desk that keeps every job moving.";
+export const APP_NAME = "Counter";
+export const APP_TAGLINE = "Repair operations on one counter.";
 export const APP_DESCRIPTION =
-  "Patchwork is a repair-shop operations system for intake, repair tickets, parts, invoices, and customer tracking.";
+  "Counter is a repair-shop operations system for intake, repair tickets, parts, invoices, and customer tracking.";
 
 export function getSiteUrl() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();

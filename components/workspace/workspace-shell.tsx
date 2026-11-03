@@ -20,7 +20,6 @@ import {
   LogoutIcon,
   MenuIcon,
   PlusIcon,
-  SearchIcon,
   TeamIcon,
   TicketIcon,
 } from "./icons";
@@ -39,16 +38,6 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function pageTitle(pathname: string) {
-  if (pathname === "/") return "Overview";
-  if (pathname.startsWith("/tickets")) return "Tickets";
-  if (pathname.startsWith("/customers")) return "Customers";
-  if (pathname.startsWith("/inventory")) return "Inventory";
-  if (pathname.startsWith("/invoices")) return "Invoices";
-  if (pathname.startsWith("/team")) return "Team";
-  return "Patchwork";
-}
-
 export function WorkspaceShell({
   user,
   children,
@@ -59,36 +48,37 @@ export function WorkspaceShell({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const displayName = user.fullName || user.email;
-  const avatar = initials(displayName) || "PW";
+  const avatar = initials(displayName) || "C";
 
   const sidebar = (
     <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center justify-between border-b border-line px-5">
+      <div className="flex h-[72px] items-center justify-between border-b border-line px-5">
         <div onClick={() => setOpen(false)}>
           <Logo />
         </div>
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="grid h-8 w-8 place-items-center rounded-lg text-muted hover:bg-wash hover:text-ink lg:hidden"
+          className="grid h-8 w-8 place-items-center border border-line text-muted hover:text-ink lg:hidden"
           aria-label="Close navigation"
         >
           <CloseIcon className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="px-3 pt-4">
+      <div className="px-3 pt-5">
         <Link
           href="/tickets/new"
           onClick={() => setOpen(false)}
-          className="flex h-10 items-center justify-center gap-2 rounded-full bg-accent px-4 text-[13px] font-semibold text-[#170A05] transition-colors hover:bg-[#ff8358]"
+          className="flex h-10 items-center justify-between gap-2 bg-accent px-3 text-[13px] font-semibold text-[#09090B] transition-colors hover:bg-[#FF7F4D]"
         >
-          <PlusIcon className="h-4 w-4" />
           New ticket
+          <PlusIcon className="h-4 w-4" />
         </Link>
       </div>
 
-      <nav className="mt-5 flex-1 space-y-1 px-3" aria-label="Main navigation">
+      <nav className="mt-7 flex-1 px-3" aria-label="Main navigation">
+        <p className="px-2 pb-2 text-[12px] text-muted">Workspace</p>
         {NAV.map((item) => {
           const active = isActive(pathname, item.href);
           const Icon = item.icon;
@@ -99,23 +89,23 @@ export function WorkspaceShell({
               onClick={() => setOpen(false)}
               className={
                 active
-                  ? "flex h-10 items-center gap-3 rounded-lg bg-wash px-3 text-[13px] font-medium text-ink"
-                  : "flex h-10 items-center gap-3 rounded-lg px-3 text-[13px] text-muted transition-colors hover:bg-wash/70 hover:text-ink"
+                  ? "flex h-9 items-center gap-3 border-l-2 border-accent bg-white/5 pl-2 text-[13px] font-medium text-ink"
+                  : "flex h-9 items-center gap-3 border-l-2 border-transparent pl-2 text-[13px] text-muted transition-colors hover:bg-white/5 hover:text-ink"
               }
               aria-current={active ? "page" : undefined}
             >
-              <Icon className={active ? "h-4 w-4 text-accent" : "h-4 w-4"} />
+              <Icon className="h-[15px] w-[15px] stroke-[1.5]" />
               {item.label}
             </Link>
           );
         })}
       </nav>
 
-      <div className="px-3 pb-3">
+      <div className="mt-6 border-t border-line">
         <Link
           href="/track"
           onClick={() => setOpen(false)}
-          className="flex h-10 items-center justify-between rounded-lg border border-line px-3 text-[12px] text-muted transition-colors hover:border-[#3A414B] hover:text-ink"
+          className="flex h-10 items-center justify-between px-5 text-[12.5px] text-muted transition-colors hover:text-ink"
         >
           Public tracker
           <ArrowUpRightIcon className="h-3.5 w-3.5" />
@@ -123,19 +113,18 @@ export function WorkspaceShell({
       </div>
 
       <div className="border-t border-line p-3">
-        <div className="flex items-center gap-3 rounded-xl px-2 py-2">
-          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-wash text-[11px] font-semibold text-accent">
+        <div className="flex items-center gap-2.5 px-1 py-1">
+          <div className="grid h-8 w-8 shrink-0 place-items-center bg-white/10 text-[12px] font-semibold text-ink">
             {avatar}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[12px] font-medium text-ink">{displayName}</p>
-            <p className="mt-0.5 truncate text-[10px] text-muted">{user.email}</p>
-            <p className="mt-0.5 text-[11px] text-muted">{ROLE_LABELS[user.role]}</p>
+            <p className="truncate text-[13px] font-medium text-ink">{displayName}</p>
+            <p className="mt-0.5 truncate text-[12px] text-muted">{ROLE_LABELS[user.role]}</p>
           </div>
           <form action={logoutAction}>
             <button
               type="submit"
-              className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-wash hover:text-ink"
+              className="grid h-8 w-8 place-items-center border border-transparent text-muted transition-colors hover:border-line hover:text-ink"
               aria-label="Log out"
               title="Log out"
             >
@@ -149,7 +138,7 @@ export function WorkspaceShell({
 
   return (
     <div className="min-h-[100dvh] bg-paper">
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[248px] border-r border-line bg-surface lg:block">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[244px] border-r border-line bg-paper lg:block">
         {sidebar}
       </aside>
 
@@ -157,46 +146,33 @@ export function WorkspaceShell({
         <div className="fixed inset-0 z-50 lg:hidden">
           <button
             type="button"
-            className="absolute inset-0 bg-black/70"
+            className="absolute inset-0 bg-ink/55"
             aria-label="Close navigation overlay"
             onClick={() => setOpen(false)}
           />
-          <aside className="absolute inset-y-0 left-0 w-[280px] border-r border-line bg-surface shadow-2xl">
+          <aside className="absolute inset-y-0 left-0 w-[280px] border-r border-line bg-paper">
             {sidebar}
           </aside>
         </div>
       ) : null}
 
-      <div className="lg:pl-[248px]">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-line bg-paper/95 px-4 sm:px-6">
+      <div className="lg:pl-[244px]">
+        <header className="flex h-14 items-center gap-3 border-b border-line bg-paper px-4 sm:px-6 lg:hidden">
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="grid h-9 w-9 place-items-center rounded-lg border border-line text-muted hover:text-ink lg:hidden"
+            className="grid h-8 w-8 place-items-center border border-line text-muted hover:text-ink"
             aria-label="Open navigation"
           >
             <MenuIcon className="h-4 w-4" />
           </button>
-
-          <p className="hidden text-[13px] font-medium text-muted sm:block">{pageTitle(pathname)}</p>
-
-          <form action="/tickets" className="ml-auto hidden w-full max-w-xs items-center md:flex">
-            <label className="relative flex w-full items-center">
-              <SearchIcon className="pointer-events-none absolute left-3 h-4 w-4 text-muted" />
-              <span className="sr-only">Search tickets</span>
-              <input
-                name="q"
-                type="search"
-                placeholder="Search tickets or customers"
-                className="h-9 w-full rounded-full border border-line bg-surface pl-9 pr-3 text-[12px] text-ink outline-none placeholder:text-muted/70 focus:border-accent"
-              />
-            </label>
-          </form>
-
-          <form action={logoutAction} className="lg:hidden">
+          <div className="ml-1">
+            <Logo />
+          </div>
+          <form action={logoutAction} className="ml-auto">
             <button
               type="submit"
-              className="grid h-9 w-9 place-items-center rounded-full border border-line text-muted hover:text-ink"
+              className="grid h-8 w-8 place-items-center border border-line text-muted hover:text-ink"
               aria-label="Log out"
               title="Log out"
             >
@@ -205,7 +181,7 @@ export function WorkspaceShell({
           </form>
         </header>
 
-        <main className="mx-auto w-full max-w-[1320px] px-4 pb-16 pt-6 sm:px-6 sm:pt-8">
+        <main className="mx-auto w-full max-w-canvas px-4 pb-20 pt-6 sm:px-6 sm:pt-8 lg:pt-9">
           {children}
         </main>
       </div>

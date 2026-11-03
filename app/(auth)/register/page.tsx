@@ -8,13 +8,13 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-ink underline decoration-[#345347] underline-offset-4 transition-colors hover:decoration-accent";
+  "font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-accent-ink";
 
 export default function RegisterPage() {
   return (
     <AuthCard
       title="Staff accounts are invite-only"
-      description="Patchwork is the internal repair desk. Owners and managers create staff accounts with a temporary password."
+      description="Counter is the internal repair desk. Owners and managers create staff accounts with a temporary password."
       footer={
         <p>
           Already have an account?{" "}
@@ -29,15 +29,15 @@ export default function RegisterPage() {
           Ask an owner or manager to add you from the <span className="text-ink">Team</span> page.
           They will give you the email and temporary password for your first sign-in.
         </p>
-        <div className="rounded-xl border border-line bg-paper p-4">
-          <p className="text-[10px] text-muted">After your first sign-in</p>
-          <p className="mt-1 text-[12px] text-ink">
+        <div className="border-l-2 border-accent bg-white/[0.03] p-4">
+          <p className="text-[12px] text-muted">After your first sign-in</p>
+          <p className="mt-1 text-[13px] text-ink">
             Change the temporary password from “Forgot password” on the sign-in screen.
           </p>
         </div>
         <Link
           href="/login"
-          className="inline-flex h-11 w-full items-center justify-center rounded-full bg-ink px-4 text-[14px] font-medium text-paper transition-colors hover:bg-white"
+          className="inline-flex h-11 w-full items-center justify-center bg-accent px-4 text-[13px] font-semibold text-[#09090B] transition-colors hover:bg-[#FF7F4D]"
         >
           Back to sign in
         </Link>

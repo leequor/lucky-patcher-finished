@@ -8,3 +8,16 @@ if (typeof HTMLCanvasElement !== "undefined") {
     writable: true,
   });
 }
+
+// React Three Fiber measures its canvas with ResizeObserver, which jsdom does
+// not provide. The observer is inert here; the WebGL fallback renders instead.
+if (typeof globalThis.ResizeObserver === "undefined") {
+  Object.defineProperty(globalThis, "ResizeObserver", {
+    value: class ResizeObserver {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+    writable: true,
+  });
+}

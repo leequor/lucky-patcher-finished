@@ -23,15 +23,8 @@ const STATE_LABEL = {
   error: "Down",
 } as const;
 
-const PILL = {
-  loading: "bg-wash text-muted",
-  ok: "bg-positive-soft text-positive-ink",
-  warn: "bg-warn-soft text-warn",
-  error: "bg-negative-soft text-negative-ink",
-} as const;
-
 const DOT = {
-  loading: "bg-[#5a6b62]",
+  loading: "bg-steel",
   ok: "bg-positive",
   warn: "bg-warn",
   error: "bg-negative",
@@ -47,17 +40,12 @@ function StatusRow({
   detail: string;
 }) {
   return (
-    <div className="flex flex-wrap items-start justify-between gap-3 border-t border-line px-5 py-4 first:border-t-0">
+    <div className="flex flex-wrap items-start justify-between gap-3 border-t border-white/10 px-4 py-3.5 first:border-t-0">
       <div>
-        <p className="text-[14px] font-medium text-ink">{label}</p>
+        <p className="text-[13px] font-medium text-ink">{label}</p>
         <p className="mt-0.5 max-w-[58ch] text-[13px] leading-5 text-muted">{detail}</p>
       </div>
-      <span
-        className={cn(
-          "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-medium",
-          PILL[state],
-        )}
-      >
+      <span className="inline-flex shrink-0 items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
         <span className={cn("h-1.5 w-1.5 rounded-full", DOT[state])} aria-hidden="true" />
         {STATE_LABEL[state]}
       </span>
@@ -108,12 +96,12 @@ export function StatusPanel() {
   return (
     <div>
       {error ? (
-        <div className="mb-3 rounded-md bg-negative-soft px-3.5 py-3 text-[13px] leading-5 text-negative-ink">
+        <div className="mb-3 border-l-2 border-negative py-1 pl-3 text-[13px] leading-5 text-negative-ink">
           {error}
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
+      <div className="overflow-hidden border-t border-white/10">
         <StatusRow
           label="Next.js app"
           state={app ? "ok" : error ? "error" : "loading"}
@@ -152,10 +140,13 @@ export function StatusPanel() {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-muted">
-        <a className="transition-colors hover:text-ink" href="/api/health">
+        <a className="figure text-muted underline underline-offset-2 transition-colors hover:text-ink" href="/api/health">
           /api/health
         </a>
-        <a className="transition-colors hover:text-ink" href="/api/health/supabase">
+        <a
+          className="figure text-muted underline underline-offset-2 transition-colors hover:text-ink"
+          href="/api/health/supabase"
+        >
           /api/health/supabase
         </a>
       </div>

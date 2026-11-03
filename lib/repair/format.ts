@@ -19,14 +19,14 @@ export const TICKET_STATUS_META: Record<
   intake: {
     label: "Intake",
     description: "Logged and waiting for a bench slot.",
-    tone: "bg-wash text-muted",
+    tone: "bg-wash text-ink",
     dot: "bg-steel",
   },
   diagnosing: {
     label: "Diagnosing",
     description: "On the bench, finding the fault.",
-    tone: "bg-[#1B2430] text-[#AFC9E8]",
-    dot: "bg-[#7EB6F2]",
+    tone: "bg-[#DCE3E3] text-[#24424A]",
+    dot: "bg-[#2F6572]",
   },
   waiting_parts: {
     label: "Waiting on parts",
@@ -37,7 +37,7 @@ export const TICKET_STATUS_META: Record<
   in_repair: {
     label: "In repair",
     description: "Approved and actively being fixed.",
-    tone: "bg-[#2A1712] text-[#FFB599]",
+    tone: "bg-accent-soft text-accent-ink",
     dot: "bg-accent",
   },
   ready: {
@@ -49,8 +49,8 @@ export const TICKET_STATUS_META: Record<
   picked_up: {
     label: "Picked up",
     description: "Paid and collected.",
-    tone: "bg-[#151A20] text-[#98A3AE]",
-    dot: "bg-[#6F7B87]",
+    tone: "bg-wash text-muted",
+    dot: "bg-steel",
   },
   cancelled: {
     label: "Cancelled",
@@ -65,7 +65,7 @@ export const PRIORITY_META: Record<
   { label: string; tone: string; dot: string; rank: number }
 > = {
   low: { label: "Low", tone: "text-steel", dot: "bg-steel", rank: 0 },
-  normal: { label: "Normal", tone: "text-muted", dot: "bg-[#8E99A3]", rank: 1 },
+  normal: { label: "Normal", tone: "text-muted", dot: "bg-[#7C817A]", rank: 1 },
   high: { label: "High", tone: "text-warn", dot: "bg-warn", rank: 2 },
   urgent: { label: "Urgent", tone: "text-negative", dot: "bg-negative", rank: 3 },
 };

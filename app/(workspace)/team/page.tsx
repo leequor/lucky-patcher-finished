@@ -42,7 +42,7 @@ export default async function TeamPage({
       />
       <Feedback notice={params.notice} error={params.error} />
 
-      <div className="mt-5 grid gap-4 xl:grid-cols-[1.35fr_0.65fr]">
+      <div className="mt-5 grid items-start gap-4 xl:grid-cols-[1.35fr_0.65fr]">
         <Panel className="reveal overflow-hidden">
           <PanelHeader title="Staff" detail={`${profiles.length} accounts · ${dashboard.openCount} open jobs`} />
           <div className="divide-y divide-line">
@@ -53,26 +53,26 @@ export default async function TeamPage({
               return (
                 <div key={member.id} className="grid gap-3 px-5 py-4 sm:grid-cols-[1.2fr_0.7fr_0.8fr_auto] sm:items-center">
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-wash text-[11px] font-semibold text-accent">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center bg-white/10 text-[12px] font-semibold text-ink">
                       {initials(member.full_name || member.email)}
                     </span>
                     <div className="min-w-0">
                       <p className="truncate text-[13px] font-medium text-ink">
                         {member.full_name || member.email}
-                        {member.id === staff?.id ? <span className="ml-2 text-[10px] text-muted">you</span> : null}
+                        {member.id === staff?.id ? <span className="ml-2 text-[12px] text-muted">you</span> : null}
                       </p>
-                      <p className="mt-0.5 truncate text-[11px] text-muted">{member.email}</p>
+                      <p className="mt-0.5 truncate text-[12px] text-muted">{member.email}</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-[11px] text-muted">{ROLE_LABELS[member.role]}</p>
+                    <p className="text-[12px] text-muted">{ROLE_LABELS[member.role]}</p>
                     <div className="mt-1.5 max-w-[120px]">
                       <DataBar value={memberLoad?.open ?? 0} max={Math.max(1, dashboard.openCount)} />
                     </div>
                   </div>
-                  <div className="text-[11px] text-muted">
-                    <span className="figure text-[12px] text-ink">{memberLoad?.open ?? 0}</span> open ·{" "}
-                    <span className="figure text-[12px] text-ink">{memberLoad?.active ?? 0}</span> in repair
+                  <div className="text-[12px] text-muted">
+                    <span className="figure text-[13px] text-ink">{memberLoad?.open ?? 0}</span> open ·{" "}
+                    <span className="figure text-[13px] text-ink">{memberLoad?.active ?? 0}</span> in repair
                   </div>
                   <div>
                     {canEditMember ? (
@@ -85,7 +85,7 @@ export default async function TeamPage({
                           id={`role-${member.id}`}
                           name="role"
                           defaultValue={member.role}
-                          className="h-8 rounded-lg border border-line bg-paper px-2 text-[11px] text-ink outline-none focus:border-accent"
+                          className="select-control h-8 rounded-none border border-white/10 bg-transparent px-2 pr-7 text-[12px] text-ink outline-none transition-colors focus:border-accent"
                         >
                           {isOwner ? <option value="superadmin">Owner</option> : null}
                           <option value="admin">Manager</option>
@@ -93,13 +93,13 @@ export default async function TeamPage({
                         </select>
                         <button
                           type="submit"
-                          className="h-8 rounded-full border border-line px-2.5 text-[10px] text-muted hover:text-ink"
+                          className="h-8 rounded-none border border-white/10 px-2.5 text-[12px] text-muted transition-colors hover:border-white/25 hover:text-ink"
                         >
                           Save
                         </button>
                       </form>
                     ) : (
-                      <span className="text-[10px] text-muted">
+                      <span className="text-[12px] text-muted">
                         {member.role === "superadmin" ? "Owner-managed" : "Manager-managed"}
                       </span>
                     )}
@@ -114,13 +114,13 @@ export default async function TeamPage({
           {canManage ? (
             <Panel className="reveal reveal-delay-1 p-5">
               <h2 className="text-[14px] font-medium text-ink">Add staff</h2>
-              <p className="mt-1 text-[11px] leading-5 text-muted">
+              <p className="mt-1 text-[12px] leading-5 text-muted">
                 Creates a confirmed Supabase account. Share the temporary password privately; the
                 person can change it from “Forgot password”.
               </p>
               <form action={inviteStaffAction} className="mt-4 space-y-3">
                 <FormField id="full_name" name="full_name" label="Name" placeholder="Rian Sabrido" required />
-                <FormField id="email" name="email" type="email" label="Email" placeholder="tech@patchwork.test" required />
+                <FormField id="email" name="email" type="email" label="Email" placeholder="tech@counter.test" required />
                 <FormField id="password" name="password" type="text" label="Temporary password" placeholder="At least 8 characters" required />
                 <SelectField id="role" name="role" label="Role" defaultValue="user">
                   <option value="user">Technician</option>
@@ -133,7 +133,7 @@ export default async function TeamPage({
           ) : (
             <Panel className="reveal reveal-delay-1 p-5">
               <h2 className="text-[14px] font-medium text-ink">Access</h2>
-              <p className="mt-2 text-[12px] leading-5 text-muted">
+              <p className="mt-2 text-[13px] leading-5 text-muted">
                 Your account is a technician. Ask an owner or manager to change roles or add new
                 staff.
               </p>
@@ -142,15 +142,15 @@ export default async function TeamPage({
 
           <Panel className="reveal reveal-delay-2 p-5">
             <h2 className="text-[14px] font-medium text-ink">Role model</h2>
-            <ul className="mt-3 space-y-3 text-[11px] leading-5 text-muted">
+            <ul className="mt-3 space-y-3 text-[12px] leading-5 text-muted">
               <li>
-                <span className="text-ink">Owner</span> — full access, staff, and owner roles.
+                <span className="text-ink">Owner</span>: full access, staff, and owner roles.
               </li>
               <li>
-                <span className="text-ink">Manager</span> — tickets, customers, inventory, invoices, and staff roles.
+                <span className="text-ink">Manager</span>: tickets, customers, inventory, invoices, and staff roles.
               </li>
               <li>
-                <span className="text-ink">Technician</span> — day-to-day tickets and customer work.
+                <span className="text-ink">Technician</span>: day-to-day tickets and customer work.
               </li>
             </ul>
           </Panel>

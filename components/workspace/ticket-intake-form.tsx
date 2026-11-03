@@ -45,13 +45,15 @@ export function TicketIntakeForm({
 
   return (
     <form action={createTicketAction} className="space-y-5" noValidate>
-      <div className="inline-flex rounded-full border border-line bg-paper p-1">
+      <div className="flex gap-5 border-b border-white/10">
         <button
           type="button"
           onClick={() => switchMode("existing")}
           className={cn(
-            "h-8 rounded-full px-3.5 text-[12px] font-medium transition-colors",
-            mode === "existing" ? "bg-ink text-paper" : "text-muted hover:text-ink",
+            "h-9 border-b-2 px-0.5 text-[13px] font-medium transition-colors",
+            mode === "existing"
+              ? "border-accent text-ink"
+              : "border-transparent text-muted hover:text-ink",
           )}
         >
           Existing customer
@@ -60,8 +62,10 @@ export function TicketIntakeForm({
           type="button"
           onClick={() => switchMode("new")}
           className={cn(
-            "h-8 rounded-full px-3.5 text-[12px] font-medium transition-colors",
-            mode === "new" ? "bg-ink text-paper" : "text-muted hover:text-ink",
+            "h-9 border-b-2 px-0.5 text-[13px] font-medium transition-colors",
+            mode === "new"
+              ? "border-accent text-ink"
+              : "border-transparent text-muted hover:text-ink",
           )}
         >
           New customer
@@ -110,7 +114,7 @@ export function TicketIntakeForm({
           </SelectField>
 
           {selected && devices.length === 0 ? (
-            <p className="text-[12px] text-warn sm:col-span-2">
+            <p className="text-[13px] text-warn sm:col-span-2">
               This customer has no device yet.{" "}
               <Link href={`/customers/${selected.id}`} className="underline">
                 Add a device
@@ -120,7 +124,7 @@ export function TicketIntakeForm({
           ) : null}
 
           {customers.length === 0 ? (
-            <p className="text-[12px] text-warn sm:col-span-2">
+            <p className="text-[13px] text-warn sm:col-span-2">
               No customers yet.{" "}
               <Link href="/customers" className="underline">
                 Add the first customer
@@ -215,14 +219,14 @@ export function TicketIntakeForm({
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
-        <p className="max-w-[52ch] text-[11px] leading-5 text-muted">
+        <p className="max-w-[52ch] text-[12px] leading-5 text-muted">
           Intake creates a public tracking code automatically. The customer can follow the repair
           with just that code.
         </p>
         <SubmitButton pendingText="Creating ticket...">Create ticket</SubmitButton>
       </div>
 
-      <p className="text-[11px] text-muted">
+      <p className="text-[12px] text-muted">
         Starting at {TICKET_STATUS_META.intake.label.toLowerCase()} · you can change the status from the
         ticket page.
       </p>

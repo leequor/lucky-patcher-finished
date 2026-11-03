@@ -28,7 +28,7 @@ describe("WorkspaceShell", () => {
       </WorkspaceShell>,
     );
 
-    expect(screen.getAllByText("Patchwork").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Counter").length).toBeGreaterThan(0);
     expect(screen.getByText("Page body")).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: /Tickets/ }).length).toBeGreaterThan(0);
     expect(screen.getByText("Alex Campita")).toBeInTheDocument();

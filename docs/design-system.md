@@ -1,6 +1,6 @@
 # Design System
 
-Patchwork uses a **workshop** interface: carbon ground, warm-white type, signal orange for the
+Counter uses a **workshop** interface: carbon ground, warm-white type, signal orange for the
 bench and primary actions, and a real-time 3D exploded-device scene. It is an operations tool
 first; the 3D bench is the product's identity, not decoration around a marketing page.
 

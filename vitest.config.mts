@@ -17,8 +17,6 @@ export default defineConfig({
       exclude: [
         "**/*.d.ts",
         "app/design-preview/**",
-        // WebGL scene is exercised by browser/E2E screenshots; jsdom has no WebGL context.
-        "components/patchwork/repair-scene.tsx",
       ],
       thresholds: {
         statements: 60,

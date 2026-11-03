@@ -10,29 +10,27 @@ export function SubmitButton({
   children,
   pendingText = "Working...",
   className,
+  size = "lg",
+  variant,
 }: {
   children: React.ReactNode;
   pendingText?: string;
   className?: string;
+  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "ghost" | "signal";
 }) {
   const { pending } = useFormStatus();
 
   return (
     <Button
       type="submit"
-      size="lg"
+      size={size}
+      variant={variant}
       className={cn("w-full", className)}
       disabled={pending}
       aria-live="polite"
     >
-      {pending ? (
-        <>
-          <span className="h-2 w-2 rounded-full bg-current" aria-hidden="true" />
-          {pendingText}
-        </>
-      ) : (
-        children
-      )}
+      {pending ? pendingText : children}
     </Button>
   );
 }

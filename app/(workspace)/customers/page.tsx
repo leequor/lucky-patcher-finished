@@ -40,17 +40,17 @@ export default async function CustomersPage({
               name="q"
               defaultValue={params.q}
               placeholder="Search name, email, phone, or company"
-              className="h-9 w-full rounded-lg border border-line bg-paper px-3 text-[12px] text-ink outline-none placeholder:text-muted/60 focus:border-accent"
+              className="h-9 w-full rounded-none border border-white/10 bg-transparent px-3 text-[13px] text-ink outline-none transition-colors placeholder:text-muted/60 hover:border-white/20 focus:border-accent"
             />
           </label>
           <button
             type="submit"
-            className="inline-flex h-9 items-center justify-center rounded-full bg-ink px-4 text-[12px] font-semibold text-paper hover:bg-white"
+            className="inline-flex h-9 items-center justify-center rounded-none bg-accent px-4 text-[13px] font-semibold text-[#09090B] hover:bg-[#FF7F4D]"
           >
             Search
           </button>
           {params.q ? (
-            <Link href="/customers" className="inline-flex h-9 items-center rounded-full border border-line px-3 text-[12px] text-muted hover:text-ink">
+            <Link href="/customers" className="inline-flex h-9 items-center rounded-none border border-white/10 px-3 text-[13px] text-muted hover:border-white/25 hover:text-ink">
               Clear
             </Link>
           ) : null}
@@ -70,7 +70,7 @@ export default async function CustomersPage({
           </div>
         ) : (
           <>
-            <div className="hidden grid-cols-[1.5fr_1fr_0.55fr_0.55fr_0.55fr] gap-4 border-b border-line px-5 py-2.5 text-[10px] text-muted md:grid">
+            <div className="hidden grid-cols-[1.5fr_1fr_0.55fr_0.55fr_0.55fr] gap-4 border-b border-white/10 px-5 py-2.5 font-mono text-[10px] uppercase tracking-widest text-white/50 md:grid">
               <span>Customer</span>
               <span>Company</span>
               <span>Devices</span>
@@ -82,24 +82,24 @@ export default async function CustomersPage({
                 <Link
                   key={customer.id}
                   href={`/customers/${customer.id}`}
-                  className="grid gap-3 px-5 py-4 transition-colors hover:bg-wash/45 md:grid-cols-[1.5fr_1fr_0.55fr_0.55fr_0.55fr] md:items-center md:gap-4"
+                  className="grid gap-3 px-5 py-4 transition-colors hover:bg-white/5 md:grid-cols-[1.5fr_1fr_0.55fr_0.55fr_0.55fr] md:items-center md:gap-4"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-wash text-[10px] font-semibold text-accent">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center bg-white/10 text-[12px] font-semibold text-ink">
                       {initials(customer.full_name)}
                     </span>
                     <div className="min-w-0">
                       <p className="truncate text-[13px] font-medium text-ink">{customer.full_name}</p>
-                      <p className="mt-0.5 truncate text-[11px] text-muted">
+                      <p className="mt-0.5 truncate text-[12px] text-muted">
                         {customer.phone}
                         {customer.email ? ` · ${customer.email}` : ""}
                       </p>
                     </div>
                   </div>
-                  <p className="truncate text-[12px] text-muted">{customer.company || "—"}</p>
-                  <p className="figure text-[12px] text-ink">{customer.device_count}</p>
-                  <p className="figure text-[12px] text-ink">{customer.open_count}</p>
-                  <p className="figure text-[12px] text-muted md:text-right">{customer.ticket_count}</p>
+                  <p className="truncate text-[13px] text-muted">{customer.company || "—"}</p>
+                  <p className="figure text-[13px] text-ink">{customer.device_count}</p>
+                  <p className="figure text-[13px] text-ink">{customer.open_count}</p>
+                  <p className="figure text-[13px] text-muted md:text-right">{customer.ticket_count}</p>
                 </Link>
               ))}
             </div>
@@ -107,7 +107,7 @@ export default async function CustomersPage({
         )}
       </Panel>
 
-      <p className="mt-4 text-[11px] text-muted">{customers.length} customer{customers.length === 1 ? "" : "s"} shown.</p>
+      <p className="mt-4 text-[12px] text-muted">{customers.length} customer{customers.length === 1 ? "" : "s"} shown.</p>
     </div>
   );
 }

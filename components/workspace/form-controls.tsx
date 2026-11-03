@@ -2,6 +2,9 @@ import type { ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "re
 
 import { cn } from "@/lib/utils";
 
+const FIELD =
+  "w-full rounded-none border border-white/10 bg-transparent text-ink outline-none transition-colors placeholder:text-muted/60 hover:border-white/20 focus:border-accent";
+
 export function SelectField({
   id,
   label,
@@ -20,10 +23,7 @@ export function SelectField({
       </label>
       <select
         id={id}
-        className={cn(
-          "h-10 w-full rounded-lg border border-line bg-paper px-3 text-[13px] text-ink outline-none transition-colors hover:border-[#3A414B] focus:border-accent",
-          className,
-        )}
+        className={cn("select-control h-10 px-2.5 pr-8 text-[13px]", FIELD, className)}
         {...props}
       >
         {children}
@@ -49,14 +49,11 @@ export function TextAreaField({
         <label htmlFor={id} className="text-[13px] font-medium text-ink">
           {label}
         </label>
-        {hint ? <span className="text-[11px] text-muted">{hint}</span> : null}
+        {hint ? <span className="text-[12px] text-muted">{hint}</span> : null}
       </div>
       <textarea
         id={id}
-        className={cn(
-          "min-h-[110px] w-full rounded-lg border border-line bg-paper px-3 py-2.5 text-[13px] leading-5 text-ink outline-none transition-colors placeholder:text-muted/55 hover:border-[#3A414B] focus:border-accent",
-          className,
-        )}
+        className={cn("min-h-[104px] px-3 py-2.5 text-[13px] leading-5", FIELD, className)}
         {...props}
       />
     </div>
@@ -75,17 +72,22 @@ export function CheckboxField({
   defaultChecked?: boolean;
 }) {
   return (
-    <label htmlFor={id} className="flex items-start gap-3 rounded-lg border border-line bg-paper px-3 py-2.5">
+    <label
+      htmlFor={id}
+      className="flex items-start gap-3 border-b border-white/10 py-3"
+    >
       <input
         id={id}
         name={id}
         type="checkbox"
         defaultChecked={defaultChecked}
-        className="mt-0.5 h-4 w-4 rounded border-line bg-paper accent-[#FF6B35]"
+        className="mt-0.5 h-4 w-4 rounded-none border-white/20 bg-transparent accent-accent"
       />
       <span>
-        <span className="block text-[12px] font-medium text-ink">{label}</span>
-        {description ? <span className="mt-0.5 block text-[11px] leading-4 text-muted">{description}</span> : null}
+        <span className="block text-[13px] font-medium text-ink">{label}</span>
+        {description ? (
+          <span className="mt-0.5 block text-[12px] leading-4 text-muted">{description}</span>
+        ) : null}
       </span>
     </label>
   );

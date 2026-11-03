@@ -10,24 +10,31 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="relative min-h-[100dvh] overflow-hidden bg-paper px-5 py-6 sm:px-6">
-      <div className="mx-auto flex min-h-[calc(100dvh-3rem)] w-full max-w-canvas flex-col">
-        <Logo />
+    <main className="min-h-[100dvh] bg-paper px-5 py-5 sm:px-8">
+      <div className="mx-auto flex min-h-[calc(100dvh-2.5rem)] w-full max-w-canvas flex-col">
+        <header className="flex h-12 items-center justify-between border-b border-white/10">
+          <Logo />
+          <Link href="/track" className="text-[12.5px] text-muted hover:text-ink">
+            Track a repair
+          </Link>
+        </header>
 
-        <div className="grid flex-1 items-center gap-8 py-14 lg:grid-cols-[1fr_0.9fr]">
+        <div className="grid flex-1 items-center gap-8 py-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="figure text-[13px] text-accent">404</p>
-            <h1 className="mt-3 text-[42px] font-semibold leading-[0.98] tracking-[-0.05em] text-ink sm:text-[56px]">
-              This page is off the bench.
+            <p className="text-[12px] text-muted">404</p>
+            <h1 className="display mt-2 text-[clamp(2.6rem,5vw,4.4rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-ink">
+              Off the
+              <br />
+              bench.
             </h1>
-            <p className="mt-4 max-w-[46ch] text-[14px] leading-6 text-muted">
-              The link may be old, or the page moved. Head back to the repair desk and pick up from
-              the queue.
+            <p className="mt-5 max-w-[40ch] text-[13px] leading-6 text-muted">
+              The link may be old, or the page moved. Head back to the desk and pick up from the
+              queue.
             </p>
             <div className="mt-7">
               <Link
                 href="/"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-[14px] font-medium text-paper transition-colors hover:bg-white"
+                className="inline-flex h-11 items-center justify-center bg-accent px-5 text-[13px] font-semibold text-[#09090B] transition-colors hover:bg-[#FF7F4D]"
               >
                 Back to the desk
               </Link>
@@ -37,8 +44,8 @@ export default function NotFound() {
           <RepairBench compact className="min-h-[280px]" />
         </div>
 
-        <p className="border-t border-line pt-4 text-[12px] text-muted">
-          Patchwork · Repair operations
+        <p className="border-t border-line pt-3 text-[12px] text-muted">
+          Counter · Repair operations
         </p>
       </div>
     </main>

@@ -13,7 +13,7 @@ test.describe("account access", () => {
     await page.goto("/");
 
     await expect(page).toHaveURL(/\/login$/);
-    await expect(page.getByRole("heading", { name: "Sign in to Patchwork" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sign in to Counter" })).toBeVisible();
   });
 
   test("the public registration page is invite-only", async ({ page }) => {
